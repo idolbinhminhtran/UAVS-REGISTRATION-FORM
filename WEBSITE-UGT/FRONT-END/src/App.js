@@ -8,7 +8,7 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <Router basename="/UAVS">
+    <Router basename="/UAVS-REGISTRATION-FORM">
       <div className="App">
         <Header />
         <Routes>
