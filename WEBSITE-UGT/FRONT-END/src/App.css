@@ -1620,6 +1620,62 @@ body {
   display: block;
 }
 
+/* Event Name - Rêveria */
+.event-name {
+  margin: 1.5rem 0;
+  position: relative;
+  display: inline-block;
+}
+
+.event-name-text {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple), var(--accent-yellow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  animation: shimmerText 4s ease-in-out infinite;
+}
+
+@keyframes shimmerText {
+  0%, 100% { 
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+  50% { 
+    background-position: 100% 50%;
+    filter: brightness(1.2);
+  }
+}
+
+.event-name-decoration {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-pink), var(--primary-purple), transparent);
+  opacity: 0.8;
+  animation: decorationSlide 3s ease-in-out infinite;
+}
+
+@keyframes decorationSlide {
+  0%, 100% { 
+    width: 80%;
+    opacity: 0.4;
+  }
+  50% { 
+    width: 120%;
+    opacity: 0.8;
+  }
+}
+
 .title-year-container {
   position: relative;
   display: inline-block;
@@ -2408,6 +2464,11 @@ blockquote p {
    
    .year-number {
      font-size: clamp(3rem, 15vw, 4.5rem);
+   }
+   
+   .event-name-text {
+     font-size: clamp(2rem, 8vw, 2.5rem);
+     letter-spacing: 0.1em;
    }
    
    .divider-text {

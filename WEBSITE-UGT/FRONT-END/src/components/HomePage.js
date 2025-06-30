@@ -142,6 +142,11 @@ const HomePage = () => {
                 <div className="title-main">Talent</div>
               </h1>
               
+              <div className="event-name">
+                <span className="event-name-text">Rêveria</span>
+                <div className="event-name-decoration"></div>
+              </div>
+              
               <div className="title-year-container">
                 <span className="year-number">2025</span>
                 <div className="year-decoration"></div>
@@ -195,7 +200,7 @@ const HomePage = () => {
         <div className="container">
           <div className="section-wrapper">
             <div className="section-header reveal">
-              <span className="section-label">About the Event</span>
+              <span className="section-label">About Rêveria</span>
               <h2 className="section-title">
                 The Kaleidoscope of Cultures
               </h2>
