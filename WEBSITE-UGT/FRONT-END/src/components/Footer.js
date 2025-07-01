@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   return (
     <footer className="footer">
@@ -82,10 +100,37 @@ const Footer = () => {
           <div className="footer-divider"></div>
           <div className="footer-bottom-content">
             <p>&copy; {currentYear} United Associations of Vietnamese Students in NSW. All rights reserved.</p>
+            <div className="footer-social-links">
+              <a href="https://www.facebook.com/uavsnsw" target="_blank" rel="noopener noreferrer">Facebook</a>
+              <span>•</span>
+              <a href="https://www.instagram.com/uavs.nsw/" target="_blank" rel="noopener noreferrer">Instagram</a>
+              <span>•</span>
+              <a href="https://www.linkedin.com/company/uavs-nsw/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            </div>
             <p className="footer-credits">Crafted with ❤️ by UAVS-NSW</p>
+            <div className="footer-mini-cta">
+              <span>Don't miss out on the talent showcase!</span>
+              <Link to="/register" className="footer-register-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+                Register Now
+              </Link>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Scroll to top button */}
+      <button 
+        className={`scroll-to-top ${showScrollTop ? 'visible' : ''}`}
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+      </button>
     </footer>
   );
 };

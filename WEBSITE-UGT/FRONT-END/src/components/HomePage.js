@@ -46,7 +46,7 @@ const HomePage = () => {
 
         {/* Animated Particles */}
         <div className="particle-container">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(8)].map((_, i) => (
             <div key={i} className={`particle particle-${i + 1}`}></div>
           ))}
         </div>
@@ -126,7 +126,7 @@ const HomePage = () => {
                   <div className="accent-shape shape-3"></div>
                 </div>
               </div>
-                        </div>
+            </div>
 
             {/* Center - Main Content */}
             <div className="hero-center">
@@ -142,7 +142,7 @@ const HomePage = () => {
                 <div className="title-main">Talent</div>
               </h1>
               
-              <div className="event-name">
+              <div className="event-name" data-text="RÊVERIA">
                 <span className="event-name-text">Rêveria</span>
                 <div className="event-name-decoration"></div>
               </div>
@@ -152,27 +152,19 @@ const HomePage = () => {
                 <div className="year-decoration"></div>
               </div>
               
-              <div className="hero-divider">
-                <span className="divider-icon">◆</span>
-                <span className="divider-text">REGISTRATION FORM</span>
-                <span className="divider-icon">◆</span>
-              </div>
-            </div>
-
-            {/* Right Side - Text and Actions */}
-            <div className="hero-right">
-              <p className="hero-description">
-                The very first cultural and performing arts competition organised by 
-                the United Associations of Vietnamese Students in New South Wales
+              {/* Value proposition tagline */}
+              <p className="hero-tagline">
+                "Showcase your talent & win amazing prizes"
               </p>
               
+              {/* Hero Actions */}
               <div className="hero-actions">
                 <Link to="/register" className="btn btn-primary btn-glow">
+                  <span className="btn-bg"></span>
                   <span className="btn-content">
                     <span className="btn-text">REGISTER NOW</span>
                     <span className="btn-icon">→</span>
                   </span>
-                  <span className="btn-bg"></span>
                 </Link>
                 <a href="#about" className="btn btn-secondary">
                   <span className="btn-content">
@@ -182,12 +174,39 @@ const HomePage = () => {
                 </a>
               </div>
               
+              {/* Registration deadline */}
+              <p className="registration-deadline">
+                <strong>Registration closes 31 July 2025</strong>
+              </p>
+            </div>
+
+            {/* Right Side - Text and Actions */}
+            <div className="hero-right">
+              <p className="hero-description">
+                The very first cultural and performing arts competition organised by 
+                the United Associations of Vietnamese Students in New South Wales
+              </p>
+              
+              <div className="hero-stats">
+                <div className="stat-item">
+                  <span className="stat-icon">🎭</span>
+                  <span>Multiple Performance Categories</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-icon">🏆</span>
+                  <span>Amazing Prizes to Win</span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-icon">🌟</span>
+                  <span>Open to All Students</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="scroll-indicator">
+        <div className="scroll-indicator" aria-label="Scroll down to learn more">
           <div className="scroll-icon">
             <div className="scroll-wheel"></div>
           </div>
