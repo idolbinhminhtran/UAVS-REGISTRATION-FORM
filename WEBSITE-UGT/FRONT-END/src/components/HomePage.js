@@ -1,7 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const HomePage = () => {
+  // Countdown Timer State
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  // Target date: July 31, 2025, 11:59 PM
+  const targetDate = new Date('2025-07-31T23:59:59').getTime();
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance > 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        setCountdown({ days, hours, minutes, seconds });
+      } else {
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    // Update immediately
+    updateCountdown();
+
+    // Update every second
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
   useEffect(() => {
     // Add animation on scroll
     const handleScroll = () => {
@@ -152,10 +189,31 @@ const HomePage = () => {
                 <div className="year-decoration"></div>
               </div>
               
-              {/* Value proposition tagline */}
-              <p className="hero-tagline">
-                "Showcase your talent & win amazing prizes"
-              </p>
+              {/* Countdown Clock */}
+              <div className="countdown-container">
+                <div className="countdown-header">Registration closes in</div>
+                                 <div className="countdown-timer">
+                   <div className="countdown-unit">
+                     <div className="countdown-number">{countdown.days}</div>
+                     <div className="countdown-label">Days</div>
+                   </div>
+                   <div className="countdown-separator">:</div>
+                   <div className="countdown-unit">
+                     <div className="countdown-number">{countdown.hours.toString().padStart(2, '0')}</div>
+                     <div className="countdown-label">Hours</div>
+                   </div>
+                   <div className="countdown-separator">:</div>
+                   <div className="countdown-unit">
+                     <div className="countdown-number">{countdown.minutes.toString().padStart(2, '0')}</div>
+                     <div className="countdown-label">Minutes</div>
+                   </div>
+                   <div className="countdown-separator">:</div>
+                   <div className="countdown-unit">
+                     <div className="countdown-number">{countdown.seconds.toString().padStart(2, '0')}</div>
+                     <div className="countdown-label">Seconds</div>
+                   </div>
+                 </div>
+              </div>
               
               {/* Hero Actions */}
               <div className="hero-actions">
@@ -174,10 +232,7 @@ const HomePage = () => {
                 </a>
               </div>
               
-              {/* Registration deadline */}
-              <p className="registration-deadline">
-                <strong>Registration closes 31 July 2025</strong>
-              </p>
+
             </div>
 
             {/* Right Side - Text and Actions */}
