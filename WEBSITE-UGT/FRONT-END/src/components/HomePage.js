@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+// Add this import at the top if you want to use require for dynamic import (not needed for public folder)
+// import { default as KaleidoscopeImage } from './kaleidoscope.png';
+
 const HomePage = () => {
   // Countdown Timer State
   const [countdown, setCountdown] = useState({
@@ -10,8 +13,8 @@ const HomePage = () => {
     seconds: 0
   });
 
-  // Target date: July 31, 2025, 11:59 PM
-  const targetDate = new Date('2025-07-31T23:59:59').getTime();
+  // Target date: July 18, 2025, 23:59 PM
+  const targetDate = new Date('2025-07-18T23:59:00').getTime();
 
   useEffect(() => {
     const updateCountdown = () => {
@@ -193,8 +196,23 @@ const HomePage = () => {
             </div>
 
             {/* Right Side - Castle Illustration */}
-            <div className="hero-illustration">
-              {/* Castle, stairs, and person SVG removed as requested */}
+            <div className="hero-illustration" style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', minHeight: '400px', width: '100%' }}>
+              <img
+                src="/kaleidoscope.png"
+                alt="Kaleidoscope"
+                className="kaleidoscope-animated"
+                style={{
+                  position: 'absolute',
+                  top: '-30px',
+                  left: '25%',
+                  maxWidth: '600px',
+                  width: '200%',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 8px 32px rgba(124,58,237,0.15))',
+                  zIndex: 2
+                }}
+              />
             </div>
           </div>
         </div>
@@ -1779,6 +1797,21 @@ UAVS's Got Talent 2025 sẽ là cầu nối, nơi mọi thông điệp được 
         <div className="floating-element element-4"></div>
         <div className="floating-element element-5"></div>
       </div>
+      {/* Add animation style for kaleidoscope image */}
+      <style>{`
+        .kaleidoscope-animated {
+          animation: spinKaleidoscope 12s linear infinite;
+          filter: drop-shadow(0 0 24px #fff7b2) drop-shadow(0 0 48px #a18fff);
+          transition: filter 0.3s;
+        }
+        .kaleidoscope-animated:hover {
+          filter: drop-shadow(0 0 48px #fff7b2) drop-shadow(0 0 96px #a18fff);
+        }
+        @keyframes spinKaleidoscope {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 };

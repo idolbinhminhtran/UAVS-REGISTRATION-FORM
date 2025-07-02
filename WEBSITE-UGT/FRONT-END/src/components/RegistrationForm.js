@@ -281,13 +281,51 @@ const RegistrationForm = () => {
     if (!validateStep()) return;
     setIsSubmitting(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      // Here you would send formData to your backend
+      // Prepare data for API
+      const apiData = {
+        ...formData,
+        performanceCategory: formData.performanceCategory || [],
+        agreements: formData.agreements || [],
+        heardAboutUs: formData.heardAboutUs || [],
+        // Ensure all optional fields have default values
+        performanceCategoryOther: formData.performanceCategoryOther || '',
+        specialRequirements: formData.specialRequirements || '',
+        minorConsentLink: formData.minorConsentLink || '',
+        heardAboutUsOther: formData.heardAboutUsOther || '',
+        accessibilityNeeds: formData.accessibilityNeeds || '',
+        questionsForUAVS: formData.questionsForUAVS || ''
+      };
+
+      // Send data to backend API
+      const response = await fetch('http://localhost:3001/api/talent-registration', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(apiData)
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        // For 422 errors, FastAPI returns detailed validation errors
+        if (response.status === 422 && result.detail) {
+          const validationErrors = result.detail.map(err => 
+            `${err.loc.join(' → ')}: ${err.msg}`
+          ).join('\n');
+          throw new Error(`Validation errors:\n${validationErrors}`);
+        }
+        throw new Error(result.message || 'Failed to submit registration');
+      }
+
+      // Success
       setSubmitSuccess(true);
       setFormData(initialFormData);
       setStep(0);
     } catch (error) {
-      // handle error
+      // Handle error
+      console.error('Registration error:', error);
+      alert(error.message || 'An error occurred while submitting your registration. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -297,16 +335,24 @@ const RegistrationForm = () => {
 
   return (
     <div className="registration-page">
-      <div className="registration-hero">
+      <div className="registration-hero enhanced-hero-bg">
         <div className="container">
-          <h1 className="registration-title">
-            <span className="title-line">Registration Form</span>
-            <span className="title-event">UAVS's Got Talent 2025</span>
+          <h1 className="registration-title gradient-title animate-gradient">
+            <span className="title-line gradient-title-text">Registration Form</span>
+            <span className="title-event event-glow pulse-glow">UAVS's Got Talent 2025</span>
           </h1>
-          <p className="registration-subtitle">
+          <p className="registration-subtitle subtitle-fade-in">
             Join us for the first cultural and performing arts competition
           </p>
         </div>
+        {/* Decorative SVG background */}
+        <svg className="hero-decor-svg" width="100%" height="100%" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle className="decor-shape decor-shape-1" cx="200" cy="80" r="60" />
+          <circle className="decor-shape decor-shape-2" cx="1240" cy="120" r="40" />
+          <rect className="decor-shape decor-shape-3" x="700" y="40" width="80" height="80" rx="20" />
+          <ellipse className="decor-shape decor-shape-4" cx="400" cy="200" rx="30" ry="15" />
+          <ellipse className="decor-shape decor-shape-5" cx="1100" cy="220" rx="25" ry="12" />
+        </svg>
       </div>
       <div className="container registration-container">
         <div className="registration-content">
@@ -338,8 +384,10 @@ const RegistrationForm = () => {
                     <span className="btn-next-center">Next</span>
                   </button>
                 ) : (
-                  <button type="submit" className="btn btn-primary btn-submit" disabled={isSubmitting}>
-                    {isSubmitting ? (<><span className="spinner"></span> Submitting...</>) : 'Submit Registration'}
+                  <button type="submit" className="btn-submit" disabled={isSubmitting}>
+                    <span className="btn-submit-center">
+                      {isSubmitting ? (<><span className="spinner"></span> Submitting...</>) : 'Submit Registration'}
+                    </span>
                   </button>
                 )}
               </div>
